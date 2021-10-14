@@ -1,0 +1,50 @@
+<style>
+    div {
+        text-align: center;
+        margin-top: 50px;
+
+    }
+
+    .API {
+        text-align: left;
+
+    }
+
+    .mysite{
+        text-align: center;
+    }
+
+    .eody{
+          text-align: right;
+
+    }
+
+    h1 {
+        color: black;
+        font-size: 40pt;
+    }
+
+    p {
+        font-size: 24pt;
+    }
+
+</style>
+
+
+<div>
+    <h1> Covid-19 Monitor - Greece</h1>
+    <p>Today: {{ date }}</p>
+    <p>Cases: {{ cases }}</p>
+    <p>Tests: {{ num_test }}</p>
+    <p>Positivity(%): {{ positivity }}% </p>
+
+    <p>Number of Vaccinations today: {{ shots }}</p>
+    <p>Total Coverage: {{ coverage }}</p>
+</div>
+
+<div class="footer">
+    <span class="API">Public API</span>
+    <span class="mysite">salihkrc.com</span>
+    <span class="eody">eody.gov.gr</span>
+</div>
+
