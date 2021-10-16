@@ -3,13 +3,13 @@ import datetime
 
 import pdfplumber
 
-pdfpath = "./PDF/covid-gr-daily-report-"+str(datetime.datetime.today().strftime('%Y%m%d'))+".pdf"
+#pdfpath = "./PDF/covid-gr-daily-report-"+str(datetime.datetime.today().strftime('%Y%m%d'))+".pdf"
 
 def extractTests(pdfpath,testFlag): # For PCR Flag=PCR, For Rapid Flag=Rapid
     pdf = pdfplumber.open(pdfpath)
     page = pdf.pages[4]
     text = page.extract_text()
-    print(text)
+    #print(text)
 
     if testFlag=="PCR":
 
@@ -19,13 +19,13 @@ def extractTests(pdfpath,testFlag): # For PCR Flag=PCR, For Rapid Flag=Rapid
         res = text.split('RapidAgέχουνελεγχθεί', maxsplit=1)[-1]\
             .split(maxsplit=1)[0]
 
-    print("\n",str(res))
+    #print("\n",str(res))
     number = re.findall(r'[0-9]+', res)
     s = [str(i) for i in number]
     fin_num = int("".join(s))
     #number = int(float(a_string))
     pdf.close()
-    print(fin_num)
+    #print(fin_num)
     return fin_num
 
 
@@ -36,7 +36,7 @@ def extractPDF(pdfpath,Flag): # Flag=death, Flag=cases
     else:
         page = pdf.pages[1]
     text = page.extract_text()
-    print(text)
+
 
     if Flag=="cases":
 
@@ -50,13 +50,31 @@ def extractPDF(pdfpath,Flag): # Flag=death, Flag=cases
         return res
 
 
-    print("\n",str(res))
+
     number = re.findall(r'[0-9]+', res)
     s = [str(i) for i in number]
     fin_num = int("".join(s))
     #number = int(float(a_string))
     pdf.close()
-    print(fin_num)
+
     return fin_num
 
-print("this->",extractTests(pdfpath,"rapid"))
+def dias(pdfpath):
+    #def extractTests(pdfpath, testFlag):  # For PCR Flag=PCR, For Rapid Flag=Rapid
+        pdf = pdfplumber.open(pdfpath)
+        page = pdf.pages[2]
+        text = page.extract_text()
+
+
+
+        buf = text.split('εύονταιδιασωληνωμένοιείναι', maxsplit=1)[-1] \
+        .split(maxsplit=1)[0]
+
+
+        buffer = buf.split("(")
+        res = buffer[0]
+        return res
+
+
+
+
