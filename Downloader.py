@@ -14,4 +14,4 @@ def DownloadPDF(): # simple download task TODO scheduling
     ret = urllib.request.urlretrieve("https://eody.gov.gr/wp-content/uploads/"+str(today.year)+"/"+str(today.month)+"/covid-gr-daily-report-"+str(datetime.datetime.today().strftime('%Y%m%d'))+".pdf", "./PDF/covid-gr-daily-report-"+str(datetime.datetime.today().strftime('%Y%m%d'))+".pdf")
     return ret
 
-DownloadPDF()
+
