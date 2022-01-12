@@ -5,7 +5,7 @@ import scrapePDF
 import db_connection
 import datetime
 
-date = datetime.datetime(2021, 10, 26
+date = datetime.datetime(2021, 12, 21
                          ) #start counting from 2021/05/01
 cursor = db_connection.connection.cursor()
 

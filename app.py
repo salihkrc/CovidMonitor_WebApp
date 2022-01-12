@@ -1,11 +1,7 @@
 from flask import Flask, render_template
-import Downloader, scrapePDF
 import datetime
-import schedule
-import time
 import  db_connection
-from schedJob import schedjob
-from threading import Thread
+
 #pdfpath = "./PDF/covid-gr-daily-report-"+str(datetime.datetime.today().strftime('%Y%m%d'))+".pdf"
 
 app = Flask(__name__)
@@ -13,10 +9,6 @@ app = Flask(__name__)
 
 
 
-def run_schedule():
-    while 1:
-        schedule.run_pending()
-        time.sleep(1)
 
 
 @app.route("/")
@@ -54,10 +46,6 @@ def index():
     return render_template("index.html", cases=cases, date=date, num_test=num_test, positivity=positivity, dias=dias,deaths=deaths)
 
 if __name__ == "__main__":
-    #schedule.every().day.at("18:38").do(schedjob)
-    #t = Thread(target=run_schedule)
-    #t.start()
-    app.debug = True
-    app.run()
+    app.run(debug=True)
 
 

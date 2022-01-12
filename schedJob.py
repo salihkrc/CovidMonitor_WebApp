@@ -10,8 +10,10 @@ import plotChart
 import emailDispatcher
 
 
+
 def schedjob():
     print("Start Scheduled Process...")
+    #Downloader.DownloadPDF() # download todays report
 
     date = datetime.datetime.today() #start counting from 2021/05/01
     cursor = db_connection.connection.cursor()
@@ -28,7 +30,7 @@ def schedjob():
         except HTTPError as err:
             if err.code == 404:
                 try:
-                    log_text += str(err), "First Attempt To Download Failed... procceeding to the new one "
+                    log_text += str(err) + "First Attempt To Download Failed... proceeding to the new one "
                     log_text += ("sending request to: https://eody.gov.gr/wp-content/uploads/" + str(
                         date.strftime('%Y')) + "/" + str(
                         date.strftime('%m')) + "/covid-gr-daily-report-" + str(date.strftime('%Y%m%d')) + "2.pdf")
@@ -39,7 +41,7 @@ def schedjob():
                 except HTTPError as err1:
 
                     if err1.code ==404:
-                        log_text += str(err1), "First Attempt To Download Failed... procceeding to the new one "
+                        log_text += str(err1) + "First Attempt To Download Failed... procceeding to the new one "
                         try:
                             log_text+="sending request to: https://eody.gov.gr/wp-content/uploads/" + str(
                                     date.strftime('%Y')) + "/" + str(
@@ -51,7 +53,7 @@ def schedjob():
                                         date.strftime('%Y%m%d')) + "-2.pdf",
                                     "./PDF/covid-gr-daily-report-" + str(date.strftime('%Y%m%d')) + ".pdf")
                         except Exception as e:
-                                log_text += str(e), "No such a file on EODY System"
+                                log_text += str(e)+ "No such a file on EODY System"
 
 
 
@@ -62,11 +64,17 @@ def schedjob():
 
 
     #pdfpath = "covid-gr-daily-report-"+str(date.strftime('%Y%m%d'))+".pdf"
+        print("PCR")
         PCR = scrapePDF.extractTests(text,"PCR")
+        print("rapid")
         Rapid = scrapePDF.extractTests(text, "rapid")
+        print("cases")
         cases = scrapePDF.extractPDF(text,'cases')
+        print('deaths')
         deaths = scrapePDF.extractPDF(text,'deaths')
+        print("dias")
         dias = scrapePDF.dias(text)
+        print("text")
         #yesterday = date - datetime.timedelta(days=1)
         log_text+= str(("deaths:",str(deaths), "dias: ", str(dias)))
 
@@ -77,7 +85,7 @@ def schedjob():
         #print(result_tuple)
         #print(result)
 
-        #print("Entering to the phase of tests calculation:", "PCR today:",int(PCR),"--",PCR,"-",int(result[1]),"--",result[1],"+", int(Rapid), "--",Rapid,"-",int(result[2]),"--",result[2])
+        print("Entering to the phase of tests calculation:", "PCR today:",int(PCR),"|",PCR,"-",int(result[1]),"|",result[1],"+", int(Rapid), "|",Rapid,"-",int(result[2]),"|",result[2])
 
         tests_today = (int(PCR) - int(result[1]) + (int(Rapid) - int(result[2])))
 
@@ -105,5 +113,4 @@ def schedjob():
         emailDispatcher.sendEmail(mail_content,"Failed")
         print(exception)
 
-
-
+schedjob()

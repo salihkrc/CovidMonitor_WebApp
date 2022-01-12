@@ -24,5 +24,4 @@ def plotChart():
     plt.savefig('static/plot.png', dpi=300, bbox_inches='tight')
 
 
-plotChart()
 
